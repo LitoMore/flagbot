@@ -1,0 +1,24 @@
+{
+  "name": "flagbot",
+  "version": "1.0.0",
+  "description": "饭否默默看你立 flag 机器人",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LitoMore/flagbot.git"
+  },
+  "author": "LitoMore",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LitoMore/flagbot/issues"
+  },
+  "homepage": "https://github.com/LitoMore/flagbot#readme",
+  "dependencies": {
+    "async": "^2.1.4",
+    "fanfou-sdk": "^1.0.5",
+    "he": "^1.1.1"
+  }
+}
