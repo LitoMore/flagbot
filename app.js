@@ -13,12 +13,13 @@ const {
   BLACKLIST,
 } = require('./banned');
 
-const ff = new Fanfou(
-  CONSUMER_KEY,
-  CONSUMER_SECRET,
-  OAUTH_TOKEN,
-  OAUTH_TOKEN_SECRET
-);
+const ff = new Fanfou({
+  auth_type: 'oauth',
+  consumer_key: CONSUMER_KEY,
+  consumer_secret: CONSUMER_SECRET,
+  oauth_token: OAUTH_TOKEN,
+  oauth_token_secret: OAUTH_TOKEN_SECRET,
+});
 
 ff.get('/statuses/public_timeline', {}, (e, res) => {
   if (e) {
