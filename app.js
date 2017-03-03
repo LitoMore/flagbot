@@ -21,13 +21,13 @@ const ff = new Fanfou({
   oauth_token_secret: OAUTH_TOKEN_SECRET,
 });
 
-ff.get('/statuses/public_timeline', {}, (e, res) => {
+ff.get('/statuses/public_timeline', {}, (e, res, timeline) => {
   if (e) {
     console.error(e);
   } else {
-    const statuses = JSON.parse(res);
-    async.eachSeries(statuses, (status, callback) => {
-      if (!isOriginalStatus(status)) callback(null);
+    async.eachSeries(timeline, (status, callback) => {
+      if (!status.hasOwnProperty('id')) callback(null);
+      else if (status.isReply() || status.isRepost() || status.isOriginRepost()) callback(null);
       else if (!isFlag(status)) callback(null);
       else {
         ff.post('/statuses/update', {
