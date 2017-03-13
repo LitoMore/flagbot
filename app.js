@@ -28,10 +28,13 @@ ff.get('/statuses/public_timeline', {count: 60}, (e, res, timeline) => {
     async.eachSeries(timeline, (status, callback) => {
       if (!status.hasOwnProperty('id')) callback(null);
       else if (status.isReply() || status.isRepost() || status.isOriginRepost()) callback(null);
-      else if (!isFlag(status)) callback(null);
+      else if (!(isFlag(status) || isDeadline(status))) callback(null);
       else {
+        let tag = '';
+        if (isFlag(status)) tag = 'FLAG@';
+        if (isDeadline(status)) tag = 'DEADLINE@';
         ff.post('/statuses/update', {
-          status: 'FLAG@' + status.user.name + ' ' + he.decode(status.text),
+          status: tag + status.user.name + ' ' + he.decode(status.text),
           repost_status_id: status.id
         }, (e, res) => {
           if (e) console.error(e);
@@ -53,6 +56,10 @@ function isOriginalStatus(status) {
 
 function isFlag(status) {
   return (status.text.toLowerCase().match(/立个flag/g));
+}
+
+function isDeadline(status) {
+  return (status.text.toLowerCase().match(/deadline/));
 }
 
 function inBannedList(id) {
