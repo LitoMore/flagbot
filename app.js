@@ -21,7 +21,7 @@ const ff = new Fanfou({
   oauth_token_secret: OAUTH_TOKEN_SECRET,
 });
 
-ff.get('/statuses/public_timeline', {}, (e, res, timeline) => {
+ff.get('/statuses/public_timeline', {count: 60}, (e, res, timeline) => {
   if (e) {
     console.error(e);
   } else {
