@@ -1,5 +1,4 @@
 const fs = require('fs');
-const he = require('he');
 const async = require('async');
 const Fanfou = require('fanfou-sdk');
 const {
@@ -34,7 +33,7 @@ ff.get('/statuses/public_timeline', {count: 60}, (e, res, timeline) => {
         if (isFlag(status)) tag = 'FLAG@';
         if (isDeadline(status)) tag = 'DEADLINE@';
         ff.post('/statuses/update', {
-          status: tag + status.user.name + ' ' + he.decode(status.text),
+          status: tag + status.user.name + ' ' + status.text,
           repost_status_id: status.id
         }, (e, res) => {
           if (e) console.error(e);

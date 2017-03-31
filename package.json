@@ -18,7 +18,6 @@
   "homepage": "https://github.com/LitoMore/flagbot#readme",
   "dependencies": {
     "async": "^2.1.4",
-    "fanfou-sdk": "^2.0.1",
-    "he": "^1.1.1"
+    "fanfou-sdk": "^2.0.7"
   }
 }
