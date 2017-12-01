@@ -26,6 +26,7 @@ ff.get('/statuses/public_timeline', {count: 60}, (e, res, timeline) => {
     async.eachSeries(timeline, (status, callback) => {
       if (!status.hasOwnProperty('id')) callback(null)
       else if (status.isReply() || status.isRepost() || status.isOriginRepost()) callback(null)
+      else if (inBannedList(status.user.id)) callback(null)
       else if (!isFlag(status)) callback(null)
       // else if (!(isFlag(status) || isDeadline(status))) callback(null);
       else {
