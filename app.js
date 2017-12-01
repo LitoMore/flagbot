@@ -27,11 +27,12 @@ ff.get('/statuses/public_timeline', {count: 60}, (e, res, timeline) => {
     async.eachSeries(timeline, (status, callback) => {
       if (!status.hasOwnProperty('id')) callback(null);
       else if (status.isReply() || status.isRepost() || status.isOriginRepost()) callback(null);
-      else if (!(isFlag(status) || isDeadline(status))) callback(null);
+      else if (!isFlag(status) callback(null);
+      // else if (!(isFlag(status) || isDeadline(status))) callback(null);
       else {
         let tag = '';
         if (isFlag(status)) tag = 'FLAG@';
-        if (isDeadline(status)) tag = 'DEADLINE@';
+        // if (isDeadline(status)) tag = 'DEADLINE@';
         ff.post('/statuses/update', {
           status: tag + status.user.name + ' ' + status.text,
           repost_status_id: status.id
@@ -54,12 +55,12 @@ function isOriginalStatus(status) {
 }
 
 function isFlag(status) {
-  return (status.text.toLowerCase().match(/立个flag/g));
+  return (status.text.toLowerCase().match(/立(了)?个( )?flag/g));
 }
 
-function isDeadline(status) {
-  return (status.text.toLowerCase().match(/deadline/));
-}
+// function isDeadline(status) {
+//   return (status.text.toLowerCase().match(/deadline/));
+// }
 
 function inBannedList(id) {
   for (let i = 0; i < BOTS.length; i++) {
